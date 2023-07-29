@@ -1,6 +1,6 @@
 # 🤖 Base Program Template
 
-⚡ Python development framework for robotchain. ⚡
+⚡ Program development template for robotchain. ⚡
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
