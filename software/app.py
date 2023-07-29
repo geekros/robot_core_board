@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import robotchain as frame
+import robotchain_sdk as framework
 
 def robot_start(sdk):
     sdk.utils.log.debug(sdk.ros.client.is_connected)
@@ -22,5 +22,5 @@ def robot_exit(sdk):
     sdk.ros.publisher("/serial_input", send_message)
 
 if __name__ == '__main__':
-    frame_sdk = frame.Init()
-    robot_start(frame_sdk)
+    framework_sdk = framework.Init()
+    robot_start(framework_sdk)
