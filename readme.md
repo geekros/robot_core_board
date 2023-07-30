@@ -18,7 +18,11 @@
 sudo curl -s https://cdn.geekros.com/robotchain/install.sh|bash
 ```
 
+## 📖 Install
 
+```shell
+sudo apt install -y robot_core_board
+```
 
 ## 🌞 Development Team
 
