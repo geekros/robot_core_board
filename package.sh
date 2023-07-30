@@ -19,15 +19,18 @@ fi
 if [ ! -d "debian" ]; then
     mkdir -p debian
     mkdir -p debian/DEBIAN
+    mkdir -p debian/opt/robotchain/manager/board
 else
     sudo rm -rf debian
     mkdir -p debian
     mkdir -p debian/DEBIAN
+    mkdir -p debian/opt/robotchain/manager/board
 fi
 
 echo -e "\033[32mStarting to build the deb software package for you...\033[0m"
 
-
+sudo cp -r ./* debian/opt/robotchain/manager/board/"$title"
+sudo rm -rf debian/opt/robotchain/manager/board/"$title"/package.sh
 
 echo -e "\033[32mPublishing the deb software package to the software repository server for you...\033[0m"
 
@@ -53,4 +56,4 @@ sudo sh -c 'echo "Description: robotchain and robot" >> debian/DEBIAN/control'
 sudo dpkg --build debian/ && dpkg-name debian.deb
 
 # shellcheck disable=SC2035
-sudo rm -rf debian && robotchain package publish && sudo rm -rf *.deb
+#sudo rm -rf debian && robotchain package publish && sudo rm -rf *.deb
