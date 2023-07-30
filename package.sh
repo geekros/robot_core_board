@@ -19,12 +19,12 @@ fi
 if [ ! -d "debian" ]; then
     mkdir -p debian
     mkdir -p debian/DEBIAN
-    mkdir -p debian/opt/robotchain/manager/board
+    mkdir -p debian/opt/robotchain/manager/board/"$title"
 else
     sudo rm -rf debian
     mkdir -p debian
     mkdir -p debian/DEBIAN
-    mkdir -p debian/opt/robotchain/manager/board
+    mkdir -p debian/opt/robotchain/manager/board/"$title"
 fi
 
 echo -e "\033[32mStarting to build the deb software package for you...\033[0m"
