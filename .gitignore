@@ -2,3 +2,7 @@
 .DS*
 .git
 .vscode
+software/__pycache__
+.robotchain/build
+.robotchain/.xmake
+.robotchain/firmware.lua
