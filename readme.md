@@ -8,6 +8,16 @@
 > 
 > An all-in-one main control development board featuring the STM32F427IIH6 microcontroller chip. It boasts a wide array of functional interfaces, including IO, USB, LED, ADC, CAN, PWM, IMU, UART, and more. With this single development board, it can cater to the majority of robot application scenarios.
 
+## 📖 Initialization
+
+> 使用、编译、构建前请在Ubuntu设备中完成robotchain的安装和部署。
+>
+> Please complete the installation and deployment of `robotchain` on your `Ubuntu` device before using, compiling, and building.
+
+```shell
+sudo curl -s https://cdn.geekros.com/robotchain/install.sh|bash
+```
+
 
 
 ## 🌞 Development Team
