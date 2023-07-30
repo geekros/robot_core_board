@@ -29,8 +29,12 @@ fi
 
 echo -e "\033[32mStarting to build the deb software package for you...\033[0m"
 
-sudo cp -r ./* debian/opt/robotchain/manager/board/"$title"
-sudo rm -rf debian/opt/robotchain/manager/board/"$title"/package.sh
+sudo cp -r .robotchain debian/opt/robotchain/manager/board/"$title"/
+sudo cp -r block debian/opt/robotchain/manager/board/"$title"/
+sudo cp -r hardware debian/opt/robotchain/manager/board/"$title"/
+sudo cp -r software debian/opt/robotchain/manager/board/"$title"/
+sudo cp .gitignore debian/opt/robotchain/manager/board/"$title"/
+sudo cp readme.md debian/opt/robotchain/manager/board/"$title"/
 
 echo -e "\033[32mPublishing the deb software package to the software repository server for you...\033[0m"
 
