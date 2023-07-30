@@ -1,4 +1,5 @@
 {
+    "type": "board",
     "title": "robot_core_board",
     "document": {
         "git": "https://github.com/geekros/robot_core_board",
