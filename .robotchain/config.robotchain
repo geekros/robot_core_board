@@ -6,6 +6,7 @@
         "wiki": ""
     },
     "version": "1.0.0",
+    "Kernel": "cortex-m4",
     "define": [
         "USE_STDPERIPH_DRIVER",
         "STM32F427_437xx",
