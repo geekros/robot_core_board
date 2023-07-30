@@ -1,6 +1,10 @@
 {
     "token": "",
     "title": "robot_core_board",
+    "document": {
+        "git": "https://github.com/geekros/robot_core_board",
+        "wiki": ""
+    },
     "version": "1.0.0",
     "launch": false,
     "define": [
