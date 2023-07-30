@@ -1,6 +1,6 @@
-# 🤖 Base Program Template
+# 🤖 Robot Core Board
 
-⚡ Program development template for robotchain. ⚡
+⚡ Robot main control development board for RobotChain. ⚡
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
