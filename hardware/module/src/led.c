@@ -95,7 +95,7 @@ void Led_Serial_Callback(cJSON *serial_data)
             cJSON *status = cJSON_GetObjectItem(serial_data, "status");
             if(strcmp(channel->valuestring, "all") == 0)
             {
-                Led_All_Status(channel->valuestring);
+                Led_All_Status(status->valuestring);
             }else{
                 Led_Status(channel->valuestring, status->valuestring);
             }
