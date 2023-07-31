@@ -35,6 +35,6 @@ void Led_All_Status(char *status);
 
 void Led_Status(char *channel, char *status);
 
-void Led_Serial_Callback(cJSON *serial_data);
+void Led_Serial_Callback(const char *serial_data);
 
 #endif
