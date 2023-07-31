@@ -15,7 +15,7 @@ void Module_Handle(char *serial_task_buffer)
     serial_data = cJSON_Parse(serial_task_buffer);
     if (serial_data)
     {
-        Serial_Read_Data.type = cJSON_GetObjectItem(Serial_Data, "type")->valuestring;
+        Serial_Read_Data.type = cJSON_GetObjectItem(serial_data, "type")->valuestring;
         if (Serial_Read_Data.type == "version")
         {
             Get_Version();
