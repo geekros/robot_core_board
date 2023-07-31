@@ -10,7 +10,7 @@
 // 低电压报警阈值
 float Low_Voltage = 11.4f;
 // 报警间隔
-int Low_Voltage_Time = 1100;
+int Low_Voltage_Time = 5000;
 int Low_Voltage_Number = 0;
 
 void Adc_Init(void)
@@ -110,20 +110,31 @@ void Adc_Low_Voltage(float voltage)
 	Low_Voltage = voltage;
 }
 
-void Adc_Serial_Callback(char *type, float voltage)
+void Adc_Serial_Callback(cJSON *serial_data)
 {
-	if (memcmp(type, "adc-low-voltage", 15) == 0)
-	{
-		Adc_Low_Voltage(voltage);
-	}
-	if (memcmp(type, "adc-board-voltage", 17) == 0)
-	{
-		float voltage = Adc_Board_Voltage();
-		Usb_Write_Data("{\"type\":\"adc-board-voltage\",\"voltage\":%0.3f}\r\n", voltage);
-	}
-	if (memcmp(type, "adc-pwm-voltage", 15) == 0)
-	{
-		float voltage = Adc_Pwm_Voltage();
-		Usb_Write_Data("{\"type\":\"adc-pwm-voltage\",\"voltage\":%0.3f}\r\n", voltage);
-	}
+    cJSON *type = cJSON_GetObjectItem(serial_data, "type");
+    if (type && cJSON_IsString(type))
+    {
+        if(strcmp(type->valuestring, "board-voltage") == 0)
+        {
+            float voltage = Adc_Board_Voltage();
+            Usb_Write_Data("{\"type\":\"board-voltage\",\"voltage\":%0.3f}\r\n", voltage);
+        }
+
+        if(strcmp(type->valuestring, "pwm-voltage") == 0)
+        {
+            float voltage = Adc_Pwm_Voltage();
+		    Usb_Write_Data("{\"type\":\"pwm-voltage\",\"voltage\":%0.3f}\r\n", voltage);
+        }
+
+        if(strcmp(type->valuestring, "low-voltage") == 0)
+        {
+            cJSON *voltage = cJSON_GetObjectItem(serial_data, "voltage");
+            if (voltage && cJSON_IsNumber(voltage))
+            {
+                float adcVoltage = (float)voltage->valuedouble;
+                Adc_Low_Voltage(adcVoltage);
+            }
+        }
+    }
 }

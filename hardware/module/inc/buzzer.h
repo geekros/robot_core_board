@@ -5,8 +5,8 @@
   ******************************************************************************
 */
 
-#ifndef MODULAR_BUZZER
-#define MODULAR_BUZZER
+#ifndef MODULE_BUZZER
+#define MODULE_BUZZER
 
 #include <stm32f4xx.h>
 #include <stdio.h>

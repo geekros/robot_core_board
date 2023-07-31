@@ -31,23 +31,11 @@ unsigned long last_update, now_update;
 static int32_t pressure = 0;
 static int32_t temperature = 0;
 
-/*******************************************************************************
- * @funtion      : Return_Mpu_Address
- * @description  : MPU数据读取地址函数
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 Mpu_Read_Struct *Return_Mpu_Address(void)
 {
 	return &Mpu_Read_Data;
 }
 
-/*******************************************************************************
- * @funtion      : Mpu_Init
- * @description  : 模块初始化
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Mpu_Init(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -97,12 +85,6 @@ void Mpu_Init(void)
 	Quaternion_Init();
 }
 
-/*******************************************************************************
- * @funtion      : Mpu9250_Init
- * @description  : MPU9250初始化
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 uint8_t id;
 void Mpu9250_Init(void)
 {
@@ -135,12 +117,6 @@ void Mpu9250_Init(void)
 	delay_ms(1);
 }
 
-/*******************************************************************************
- * @funtion      : Ak8963_Init
- * @description  : Ak8963初始化
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Ak8963_Init(void)
 {
 	Mpu_Write_Byte(MPUREG_USER_CTRL, 0x30);
@@ -168,12 +144,6 @@ void Ak8963_Init(void)
 	Mpu_Aux_Config(0, AK8963_I2C_ADDR, AK8963REG_ST1, 8);
 }
 
-/*******************************************************************************
- * @funtion      : Bmp280_Init
- * @description  : Bmp280初始化
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Bmp280_Init(void)
 {
 
@@ -187,12 +157,6 @@ void Bmp280_Init(void)
 	Mpu_Aux_Config(1, BMP280_I2C_ADDR, BMP280_PRESSURE_MSB_REG, 6);
 }
 
-/*******************************************************************************
- * @funtion      : Mpu_Read_Byte
- * @description  : Byte数据读取函数
- * @param         {uint8_t const reg}
- * @return        {*}
- *******************************************************************************/
 uint8_t Mpu_Read_Byte(uint8_t const reg)
 {
 	uint8_t data = 0;
@@ -217,14 +181,6 @@ uint8_t Mpu_Read_Byte(uint8_t const reg)
 	return data;
 }
 
-/*******************************************************************************
- * @funtion      : Mpu_Read_Bytes
- * @description  : Byte字节数据写入函数
- * @param         {uint8_t const regAddr}
- * @param         {uint8_t *pData}
- * @param         {uint8_t len}
- * @return        {*}
- *******************************************************************************/
 uint8_t Mpu_Read_Bytes(uint8_t const regAddr, uint8_t *pData, uint8_t len)
 {
 	int i = 0;
@@ -252,13 +208,6 @@ uint8_t Mpu_Read_Bytes(uint8_t const regAddr, uint8_t *pData, uint8_t len)
 	return 0;
 }
 
-/*******************************************************************************
- * @funtion      : Mpu_Write_Byte
- * @description  : Byte数据写入函数
- * @param         {uint8_t const reg}
- * @param         {uint8_t const data}
- * @return        {*}
- *******************************************************************************/
 uint8_t Mpu_Write_Byte(uint8_t const reg, uint8_t const data)
 {
 	MPU_ENABLE;
@@ -282,12 +231,6 @@ uint8_t Mpu_Write_Byte(uint8_t const reg, uint8_t const data)
 	return 0;
 }
 
-/*******************************************************************************
- * @funtion      : Mpu_Aux_Config
- * @description  : 内部I2C Slave配置函数
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Mpu_Aux_Config(uint8_t slaveNum, uint8_t slaveAddr, uint8_t readAddr, uint8_t readLens)
 {
 	uint8_t reg;
@@ -306,14 +249,6 @@ void Mpu_Aux_Config(uint8_t slaveNum, uint8_t slaveAddr, uint8_t readAddr, uint8
 	Mpu_Write_Byte(MPUREG_I2C_MST_DELAY_CTRL, reg | (0x01 << slaveNum));
 }
 
-/*******************************************************************************
- * @funtion      : Mpu_Aux_Write_Data
- * @description  : 内部I2C数据写入函数
- * @param         {uint8_t slaveAddr}
- * @param         {uint8_t writeAddr}
- * @param         {uint8_t writeData}
- * @return        {*}
- *******************************************************************************/
 void Mpu_Aux_Write_Data(uint8_t slaveAddr, uint8_t writeAddr, uint8_t writeData)
 {
 	uint8_t status;
@@ -334,13 +269,6 @@ void Mpu_Aux_Write_Data(uint8_t slaveAddr, uint8_t writeAddr, uint8_t writeData)
 	delay_ms(1);
 }
 
-/*******************************************************************************
- * @funtion      : Mpu_Aux_Read_Data
- * @description  : 内部I2C数据读取函数
- * @param         {uint8_t slaveAddr}
- * @param         {uint8_t readAddr}
- * @return        {*}
- *******************************************************************************/
 uint8_t Mpu_Aux_Read_Data(uint8_t slaveAddr, uint8_t readAddr)
 {
 	uint8_t status;
@@ -362,12 +290,6 @@ uint8_t Mpu_Aux_Read_Data(uint8_t slaveAddr, uint8_t readAddr)
 	return readData;
 }
 
-/*******************************************************************************
- * @funtion      : Mpu_Offset_Data
- * @description  : 获得偏移量
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Mpu_Offset_Data(void)
 {
 	int i;
@@ -390,12 +312,6 @@ void Mpu_Offset_Data(void)
 	Mpu_Offset.gyro_z = Mpu_Offset.gyro_z / 300;
 }
 
-/*******************************************************************************
- * @funtion      : Quaternion_Init
- * @description  : 四元数初始化
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Quaternion_Init(void)
 {
 	int16_t hx, hy;
@@ -471,12 +387,6 @@ void Quaternion_Init(void)
 	}
 }
 
-/*******************************************************************************
- * @funtion      : Compensate_Temperature
- * @description  : 温度数据补偿
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 u32 Compensate_Temperature(s32 adcT)
 {
 	s32 var1, var2, T;
@@ -487,12 +397,6 @@ u32 Compensate_Temperature(s32 adcT)
 	return T;
 }
 
-/*******************************************************************************
- * @funtion      : Compensate_Pressure
- * @description  : 气压数据补偿
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 u32 Compensate_Pressure(s32 adcP)
 {
 	int64_t var1, var2, p;
@@ -514,12 +418,6 @@ u32 Compensate_Pressure(s32 adcP)
 	return (uint32_t)p;
 }
 
-/*******************************************************************************
- * @funtion      : PressureFilter
- * @description  : 气压数据过滤
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void PressureFilter(float *in, float *out)
 {
 	static u8 i = 0;
@@ -558,12 +456,6 @@ void PressureFilter(float *in, float *out)
 	}
 }
 
-/*******************************************************************************
- * @funtion      : Pressure_To_Altitude
- * @description  : 气压转海拔数据
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 float Pressure_To_Altitude(float *pressure)
 {
 	if (*pressure > 0)
@@ -576,12 +468,6 @@ float Pressure_To_Altitude(float *pressure)
 	}
 }
 
-/*******************************************************************************
- * @funtion      : Mpu_Attitude_Calc
- * @description  : 姿态数据计算
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 float inv_sqrt(float x)
 {
 	float halfx = 0.5f * x;
@@ -678,12 +564,6 @@ void Mpu_Attitude_Calc(void)
 	q3 = tempq3 * norm;
 }
 
-/*******************************************************************************
- * @funtion      : Mpu_Task
- * @description  : 任务回调函数，数据读取计算（加速度、陀螺仪、磁力计、气温、气压（海拔））
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Mpu_Task(void)
 {
 	static float this_temperature;
@@ -743,22 +623,18 @@ void Mpu_Task(void)
 	Mpu_Read_Data.pit = atan2(2 * q2 * q3 + 2 * q0 * q1, -2 * q1 * q1 - 2 * q2 * q2 + 1) * 57.3;
 }
 
-/*******************************************************************************
- * @funtion      : Mpu_Usb_Callback
- * @description  : 串口任务回调函数
- * @param         {char *type} 通讯协议类型
- * @return        {*}
- *******************************************************************************/
-void Mpu_Usb_Callback(char *type)
+void Mpu_Serial_Callback(cJSON *serial_data)
 {
-	if (memcmp(type, "mpu-read", 8) == 0)
-	{
-		Usb_Write_Data("{\"type\":\"mpu-read\",\"rol\":%0.3f,\"pit\":%0.3f,\"yaw\":%0.3f,\"temperature\":%0.3f,\"altitude\":%0.3f,\"pressure\":%0.3f}\r\n",
-					   Mpu_Read_Data.rol, Mpu_Read_Data.pit, Mpu_Read_Data.yaw, Mpu_Read_Data.temperature, Mpu_Read_Data.altitude, Mpu_Read_Data.pressure);
-	}
-	else if (memcmp(type, "mpu-accel", 9) == 0)
-	{
-		Usb_Write_Data("{\"type\":\"mpu-accel\",\"x\":%d,\"y\":%d,\"z\":%d}\r\n",
-					   Mpu_Calc.accel_x, Mpu_Calc.accel_y, Mpu_Calc.accel_z);
-	}
+    cJSON *type = cJSON_GetObjectItem(serial_data, "type");
+    if (type && cJSON_IsString(type))
+    {
+        if(strcmp(type->valuestring, "mpu") == 0)
+        {
+            Usb_Write_Data("{\"type\":\"get-mpu\",\"rol\":%0.3f,\"pit\":%0.3f,\"yaw\":%0.3f,\"temperature\":%0.3f,\"altitude\":%0.3f,\"pressure\":%0.3f}\r\n", Mpu_Read_Data.rol, Mpu_Read_Data.pit, Mpu_Read_Data.yaw, Mpu_Read_Data.temperature, Mpu_Read_Data.altitude, Mpu_Read_Data.pressure);
+        }
+        if(strcmp(type->valuestring, "mpu-attitude") == 0)
+        {
+            Usb_Write_Data("{\"type\":\"get-mpu-attitude\",\"x\":%d,\"y\":%d,\"z\":%d}\r\n", Mpu_Calc.accel_x, Mpu_Calc.accel_y, Mpu_Calc.accel_z);
+        }
+    }
 }

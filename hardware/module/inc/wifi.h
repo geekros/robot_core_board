@@ -5,8 +5,8 @@
  ******************************************************************************
  */
 
-#ifndef MODULAR_WIFI
-#define MODULAR_WIFI
+#ifndef MODULE_WIFI
+#define MODULE_WIFI
 
 #include "stm32f4xx.h"
 #include <stdbool.h>

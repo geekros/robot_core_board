@@ -7,12 +7,6 @@
 
 #include "pwm.h"
 
-/*******************************************************************************
- * @funtion      : Pwm_Init
- * @description  : 模块初始化
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Pwm_Init(void)
 {
     TIM1_Config();
@@ -26,12 +20,6 @@ void Pwm_Init(void)
     }
 }
 
-/*******************************************************************************
- * @funtion      : TIM1_Config、TIM8_Config、TIM2_Config、TIM4_Config、TIM5_Config
- * @description  : PWM模块所需的时钟配置函数
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void TIM1_Config(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
@@ -338,13 +326,6 @@ void TIM5_Config(void)
     TIM_Cmd(TIM5, ENABLE);
 }
 
-/*******************************************************************************
- * @funtion      : Pwm_Control
- * @description  : 运动控制
- * @param         {int channel} 通道 可选值1-16
- * @param         {int width} 脉宽 可选值：500~2500
- * @return        {*}
- *******************************************************************************/
 void Pwm_Control(int channel, uint16_t pwm)
 {
     TIM_TypeDef *tim;
@@ -418,17 +399,19 @@ void Pwm_Control(int channel, uint16_t pwm)
     }
 }
 
-/***************************************************ninage ****************************
- * @funtion      : Pwm_Usb_Callback
- * @description  : 串口任务回调函数
- * @param         {int channel} 通道 可选值1-16
- * @param         {int width} 脉宽 可选值：500~2500
- * @return        {*}
- *******************************************************************************/
-void Pwm_Usb_Callback(char *type, int channel, int width)
+void Pwm_Serial_Callback(cJSON *serial_data)
 {
-    if (memcmp(type, "pwm-control", 11) == 0)
+    cJSON *type = cJSON_GetObjectItem(serial_data, "type");
+    if (type && cJSON_IsString(type))
     {
-        Pwm_Control(channel, (uint16_t)width);
+        if(strcmp(type->valuestring, "pwm") == 0)
+        {
+           cJSON *channel = cJSON_GetObjectItem(serial_data, "channel");
+           cJSON *width = cJSON_GetObjectItem(serial_data, "width");
+           if (channel && cJSON_IsNumber(channel))
+           {
+               Pwm_Control((int)channel->valueint, (uint16_t)width->valueint);
+           }
+        }
     }
 }

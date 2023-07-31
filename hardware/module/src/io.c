@@ -7,13 +7,6 @@
 
 #include "io.h"
 
-/*******************************************************************************
- * @funtion      : Io_Model
- * @description  : IO模式设置
- * @param         {int channel} 通道 可选值：1~18
- * @param         {char *mode} 模式 可选值：in、out
- * @return        {*}
- *******************************************************************************/
 void Io_Model(int channel, char *mode)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -365,13 +358,6 @@ void Io_Model(int channel, char *mode)
 	}
 }
 
-/*******************************************************************************
- * @funtion      : Io_State
- * @description  : IO状态设置
- * @param         {int channel} 通道 可选值：1~18
- * @param         {char *state} 状态 可选值：high、low、switch
- * @return        {*}
- *******************************************************************************/
 void Io_State(int channel, char *state)
 {
 	int that_status = 0;
@@ -665,27 +651,35 @@ void Io_State(int channel, char *state)
 			}
 			that_status = USER_IO_PI11_READ;
 		}
-		Usb_Write_Data("{\"type\":\"io-state\",\"channel\":%d,\"state\":%d}\r\n", channel, that_status);
+		Usb_Write_Data("{\"type\":\"io-status\",\"channel\":%d,\"status\":%d}\r\n", channel, that_status);
 	}
 }
 
-/*******************************************************************************
- * @funtion      : Io_Usb_Callback
- * @description  : 串口任务回调函数
- * @param         {char *type} 通讯协议类型
- * @param         {int channel} 通道 可选值：1~18
- * @param         {char *mode} 模式 可选值：in、out
- * @param         {char *state} 状态 可选值：high、low、switch
- * @return        {*}
- *******************************************************************************/
-void Io_Usb_Callback(char *type, int channel, char *mode, char *state)
+void Io_Serial_Callback(cJSON *serial_data)
 {
-	if (memcmp(type, "io-mode", 7) == 0)
-	{
-		Io_Model(channel, mode);
-	}
-	if (memcmp(type, "io-state", 8) == 0)
-	{
-		Io_State(channel, state);
-	}
+    cJSON *type = cJSON_GetObjectItem(serial_data, "type");
+    if (type && cJSON_IsString(type))
+    {
+        if(strcmp(type->valuestring, "io-mode") == 0)
+        {
+            cJSON *channel = cJSON_GetObjectItem(serial_data, "channel");
+            cJSON *mode = cJSON_GetObjectItem(serial_data, "mode");
+            if (channel && cJSON_IsNumber(channel))
+            {
+                int ioChannel = (int)channel->valueint;
+                Io_Model(ioChannel, mode->valuestring);
+            }
+        }
+
+        if(strcmp(type->valuestring, "io-status") == 0)
+        {
+            cJSON *channel = cJSON_GetObjectItem(serial_data, "channel");
+            cJSON *status = cJSON_GetObjectItem(serial_data, "status");
+            if (channel && cJSON_IsNumber(channel))
+            {
+                int ioChannel = (int)channel->valueint;
+                Io_State(channel, status->valuestring);
+            }
+        }
+    }
 }

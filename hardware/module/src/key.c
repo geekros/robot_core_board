@@ -7,12 +7,6 @@
 
 #include "key.h"
 
-/*******************************************************************************
- * @funtion      : Key_Init
- * @description  : 模块初始化
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Key_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
@@ -22,16 +16,14 @@ void Key_Init(void)
     GPIO_Init(GPIOB, &GPIO_InitStructure);
 }
 
-/*******************************************************************************
- * @funtion      : Key_Usb_Callback
- * @description  : 串口任务回调函数
- * @param         {char *type} 通讯协议类型
- * @return        {*}
- *******************************************************************************/
-void Key_Usb_Callback(char *type)
+void Key_Serial_Callback(cJSON *serial_data)
 {
-    if (memcmp(type, "key-state", 9) == 0)
+    cJSON *type = cJSON_GetObjectItem(serial_data, "type");
+    if (type && cJSON_IsString(type))
     {
-        Usb_Write_Data("{\"type\":\"key-state\",\"state\":%d}\r\n", Key_State);
+        if(strcmp(type->valuestring, "key-status") == 0)
+        {
+            Usb_Write_Data("{\"type\":\"key-status\",\"status\":%d}\r\n", Key_Status);
+        }
     }
 }

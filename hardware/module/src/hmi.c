@@ -9,12 +9,6 @@
 
 Hmi_Struct Hmi_Data;
 
-/*******************************************************************************
- * @funtion      : Hmi_Init
- * @description  : 模块初始化，UART8作为HMI串口触摸屏模块专用接口
- * @param         {int baud_rate} 波特率
- * @return        {*}
- *******************************************************************************/
 void Hmi_Init(int baud_rate)
 {
     USART_InitTypeDef USART_InitStructure;
@@ -57,12 +51,6 @@ void Hmi_Init(int baud_rate)
     NVIC_Init(&NVIC_InitStructure);
 }
 
-/*******************************************************************************
- * @funtion      : UART8_IRQHandler
- * @description  : 中断回调函数，接收UART8数据
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void UART8_IRQHandler(void)
 {
     volatile static uint8_t data;
@@ -95,29 +83,7 @@ void UART8_IRQHandler(void)
     }
 }
 
-/*******************************************************************************
- * @funtion      : Hmi_Parse_Json
- * @description  : 解析JSON数据
- * @param         {char *json} JSON数据
- * @return        {*}
- *******************************************************************************/
-void Hmi_Parse_Json(char *json)
+void Flash_Serial_Callback(cJSON *serial_data)
 {
-    // 回调USB串口任务的JSON通讯协议解析与处理函数
-    Serial_Json_Handle(json);
-}
 
-/*******************************************************************************
- * @funtion      : Hmi_Usb_Callback
- * @description  : 串口任务回调函数
- * @param         {char *type} 通讯协议类型
- * @param         {int baud_rate} 波特率
- * @return        {*}
- *******************************************************************************/
-void Hmi_Usb_Callback(char *type, int baud_rate)
-{
-    if (memcmp(type, "hmi-rate", 8) == 0)
-    {
-        Hmi_Init(baud_rate);
-    }
 }

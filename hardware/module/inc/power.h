@@ -5,14 +5,17 @@
  ******************************************************************************
  */
 
-#ifndef MODULAR_POWER
-#define MODULAR_POWER
+#ifndef MODULE_POWER
+#define MODULE_POWER
 
 #include <stm32f4xx.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
+#include "usb.h"
+#include "utils.h"
 
 #define POWER1_24V_OFF() GPIO_ResetBits(GPIOH, GPIO_Pin_2)
 #define POWER1_24V_ON() GPIO_SetBits(GPIOH, GPIO_Pin_2)
@@ -40,12 +43,12 @@ void Power_24v_Init(void);
 
 void Power_5v_Init(void);
 
-void Power_5v_State(int id, char *state);
+void Power_5v_Status(int id, char *status);
 
-void Power_24v_State(int id, char *state);
+void Power_24v_Status(int id, char *status);
 
-void Power_State(int channel, int id, char *state);
+void Power_Status(int channel, int id, char *status);
 
-void Power_Usb_Callback(char *type, int channel, int id, char *state);
+void Power_Serial_Callback(cJSON *serial_data);
 
 #endif

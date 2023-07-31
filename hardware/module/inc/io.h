@@ -5,8 +5,8 @@
  ******************************************************************************
  */
 
-#ifndef MODULAR_IO
-#define MODULAR_IO
+#ifndef MODULE_IO
+#define MODULE_IO
 
 #include <stm32f4xx.h>
 #include <stdio.h>
@@ -15,6 +15,7 @@
 #include <math.h>
 
 #include "usb.h"
+#include "utils.h"
 
 #define USER_IO_PE3_READ GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_3)
 #define USER_IO_PH14_READ GPIO_ReadInputDataBit(GPIOH, GPIO_Pin_14)
@@ -111,6 +112,6 @@ void Io_Model(int channel, char *mode);
 
 void Io_State(int channel, char *state);
 
-void Io_Usb_Callback(char *type, int channel, char *mode, char *state);
+void Io_Serial_Callback(cJSON *serial_data);
 
 #endif

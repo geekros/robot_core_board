@@ -7,12 +7,6 @@
 
 #include "flash.h"
 
-/******************************************************************
-  * @ 函数名  ： Flash_Get_Sector
-  * @ 功能说明： 获取某个地址所在的flash扇区
-  * @ 参数    ： NULL 
-  * @ 返回值  ： NULL
-  *****************************************************************/
 uint16_t Flash_Get_Sector(u32 addr)
 {
 	if((addr < ADDR_FLASH_SECTOR_1) && (addr >= ADDR_FLASH_SECTOR_0))
@@ -66,51 +60,34 @@ uint16_t Flash_Get_Sector(u32 addr)
 		return FLASH_Sector_23;
 }
 
-/******************************************************************
-  * @ 函数名  ： Flash_Write_Data
-  * @ 功能说明： 写入数据
-  * @ 参数    ： NULL 
-  * @ 返回值  ： NULL
-  *****************************************************************/
 int Flash_Write(uint32_t len, uint16_t *data)
 {
 	uint32_t write_addr;
 	write_addr = FLASH_SAVE_ADDR;
-	
-	// 解锁
+
 	FLASH_Unlock();
-	// 擦除用户区域 (用户区域指程序本身没有使用的空间，可以自定义)，清除各种FLASH的标志位 
-  FLASH_ClearFlag(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR);
-	// 擦除扇区内容
+    FLASH_ClearFlag(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR);
 	if (FLASH_COMPLETE != FLASH_EraseSector(Flash_Get_Sector(write_addr), VoltageRange_3))
-  {		
+    {
 		return FLASH_ERROR;
 	}
 	for (int i = 0; i < len; i++)
 	{
-		// 写入16位数据
 		if (FLASH_COMPLETE != FLASH_ProgramHalfWord(write_addr, data[i]))
 		{
 			return FLASH_ERROR;
 		}
-		write_addr += 2;	//16位数据偏移两个位置
+		write_addr += 2;
 	}
-	// 上锁
 	FLASH_Lock();
 	return FLASH_SUCCESS;
 }
 
-/******************************************************************
-  * @ 函数名  ： Flash_Read_Data
-  * @ 功能说明： 读取数据
-  * @ 参数    ： NULL 
-  * @ 返回值  ： NULL
-  *****************************************************************/
 void Flash_Read(uint32_t len, uint16_t *data)
 {
 	uint32_t read_addr;
 	read_addr = FLASH_SAVE_ADDR;
-	
+
 	for (int i = 0; i < len; i++)
 	{
 		data[i] = *(__IO uint16_t*)read_addr;
@@ -121,70 +98,20 @@ void Flash_Read(uint32_t len, uint16_t *data)
 	}
 }
 
-/******************************************************************
-  * @ 函数名  ： Flash_Erase_Data
-  * @ 功能说明： 存储数据
-  * @ 参数    ： NULL 
-  * @ 返回值  ： NULL
-  *****************************************************************/
+
 int Flash_Erase_Data(void)
 {
-	// 解锁
 	FLASH_Unlock();
-	// 擦除用户区域 (用户区域指程序本身没有使用的空间，可以自定义)，清除各种FLASH的标志位 
-  FLASH_ClearFlag(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR);
+    FLASH_ClearFlag(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR);
 	if (FLASH_COMPLETE != FLASH_EraseSector(Flash_Get_Sector(FLASH_SAVE_ADDR), VoltageRange_3))
-  {		
+    {
 		return FLASH_ERROR;
 	}
-	// 上锁
 	FLASH_Lock();
-	
 	return FLASH_SUCCESS;
 }
 
-/*******************************************************************************
- * @funtion      : Flash_Usb_Callback
- * @description  : 串口任务回调函数
- * @param         {char *type} 通讯协议类型
- * @return        {*}
- *******************************************************************************/
-void Flash_Usb_Callback(char *type, uint32_t len)
+void Flash_Serial_Callback(cJSON *serial_data)
 {
-	uint16_t Flash_Write_Data[len];
-	uint16_t Flash_Read_Data[len];
-	
-	if (memcmp(type, "flash-write", 11) == 0)
-	{
-		memset(Flash_Write_Data, 0, sizeof(Flash_Write_Data));
-		Flash_Write_Data[0] = 510;
-		Flash_Write_Data[1] = 560;
-		Flash_Write_Data[2] = 700;
-		Flash_Write_Data[3] = 715;
-		Flash_Write_Data[4] = 500;
-		Flash_Write_Data[5] = 525;
-		Flash_Write_Data[6] = 510;
-		Flash_Write_Data[7] = 545;
-		if(Flash_Write(len, Flash_Write_Data) != FLASH_SUCCESS)
-		{
-			Usb_Write_Data("{\"type\":\"flash-write-error\"}\r\n");
-		}else{
-			Usb_Write_Data("{\"type\":\"flash-write-success\"}\r\n");
-		}
-	}
-	if (memcmp(type, "flash-read", 10) == 0)
-	{
-		memset(Flash_Read_Data, 0, sizeof(Flash_Read_Data));
-		Flash_Read(len, Flash_Read_Data);
-		Usb_Write_Data("{\"type\":\"flash-read-success\",\"data\":%d}\r\n", Flash_Read_Data[0]);
-	}
-	if (memcmp(type, "flash-erase", 11) == 0)
-	{
-		if(Flash_Erase_Data() != FLASH_SUCCESS)
-		{
-			Usb_Write_Data("{\"type\":\"flash-erase-error\"}\r\n");
-		}else{
-			Usb_Write_Data("{\"type\":\"flash-erase-success\"}\r\n");
-		}
-	}
+
 }

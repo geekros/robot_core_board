@@ -5,8 +5,8 @@
  ******************************************************************************
  */
 
-#ifndef MODULAR_CPU
-#define MODULAR_CPU
+#ifndef MODULE_CPU
+#define MODULE_CPU
 
 #include <stm32f4xx.h>
 #include <stdio.h>
@@ -15,11 +15,12 @@
 #include <math.h>
 
 #include "usb.h"
+#include "utils.h"
 
 void Cpu_Init(void);
 
 float Cpu_Temperature(void);
 
-void Cpu_Usb_Callback(char *type);
+void Cpu_Serial_Callback(cJSON *serial_data);
 
 #endif

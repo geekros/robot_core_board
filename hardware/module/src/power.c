@@ -7,24 +7,12 @@
 
 #include "power.h"
 
-/*******************************************************************************
- * @funtion      : Power_Init
- * @description  : 模块初始化
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Power_Init(void)
 {
 	Power_24v_Init();
 	Power_5v_Init();
 }
 
-/*******************************************************************************
- * @funtion      : Power_24v_Init
- * @description  : 24v可控电源接口初始化，开发板共4组24v可控电源接口
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Power_24v_Init(void)
 {
 	GPIO_InitTypeDef gpio;
@@ -37,19 +25,12 @@ void Power_24v_Init(void)
 	gpio.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_Init(GPIOH, &gpio);
 
-	// 默认关闭所有24v电源接口
 	POWER1_24V_OFF();
 	POWER2_24V_OFF();
 	POWER3_24V_OFF();
 	POWER4_24V_OFF();
 }
 
-/*******************************************************************************
- * @funtion      : Power_5v_Init
- * @description  : 5v可控电源接口初始化，开发板共2组5v可控电源接口
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Power_5v_Init(void)
 {
 	GPIO_InitTypeDef gpio;
@@ -68,162 +49,140 @@ void Power_5v_Init(void)
 	gpio.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_Init(GPIOB, &gpio);
 
-	// 默认关闭所有5v电源接口
 	POWER_5V_A_OFF();
 	POWER_5V_B_OFF();
 }
 
-/*******************************************************************************
- * @funtion      : Power_5v_State
- * @description  : 5v可控电源状态
- * @param         {int id} ID编号 可选值：0、1、2
- * @param         {char *state} 状态 可选值：on、off
- * @return        {*}
- *******************************************************************************/
-void Power_5v_State(int id, char *state)
+void Power_5v_Status(int id, char *status)
 {
-	if (id == 0)
-	{
-		if (memcmp(state, "on", 2) == 0)
-		{
-			POWER_5V_A_ON();
-			POWER_5V_B_ON();
-		}
-		if (memcmp(state, "off", 3) == 0)
-		{
-			POWER_5V_A_OFF();
-			POWER_5V_B_OFF();
-		}
-	}
-	if (id == 1)
-	{
-		if (memcmp(state, "on", 2) == 0)
-		{
-			POWER_5V_A_ON();
-		}
-		if (memcmp(state, "off", 3) == 0)
-		{
-			POWER_5V_A_OFF();
-		}
-	}
-	if (id == 2)
-	{
-		if (memcmp(state, "on", 2) == 0)
-		{
-			POWER_5V_B_ON();
-		}
-		if (memcmp(state, "off", 3) == 0)
-		{
-			POWER_5V_B_OFF();
-		}
-	}
+    if (id == 0)
+    {
+        if (strcmp(status, "on") == 0)
+        {
+            POWER_5V_A_ON();
+            POWER_5V_B_ON();
+        }
+        else if (strcmp(status, "off") == 0)
+        {
+            POWER_5V_A_OFF();
+            POWER_5V_B_OFF();
+        }
+    }
+    else if (id == 1)
+    {
+        if (strcmp(status, "on") == 0)
+        {
+            POWER_5V_A_ON();
+        }
+        else if (strcmp(status, "off") == 0)
+        {
+            POWER_5V_A_OFF();
+        }
+    }
+    else if (id == 2)
+    {
+        if (strcmp(status, "on") == 0)
+        {
+            POWER_5V_B_ON();
+        }
+        else if (strcmp(status, "off") == 0)
+        {
+            POWER_5V_B_OFF();
+        }
+    }
 }
 
-/*******************************************************************************
- * @funtion      : Power_24v_State
- * @description  : 5v可控电源状态
- * @param         {int id} ID编号 可选值：0、1、2、3、4
- * @param         {char *state} 状态 可选值：on、off
- * @return        {*}
- *******************************************************************************/
-void Power_24v_State(int id, char *state)
+void Power_24v_Status(int id, char *status)
 {
-	if (id == 0)
-	{
-		if (memcmp(state, "on", 2) == 0)
-		{
-			POWER1_24V_ON();
-			POWER2_24V_ON();
-			POWER3_24V_ON();
-			POWER4_24V_ON();
-		}
-		if (memcmp(state, "off", 3) == 0)
-		{
-			POWER1_24V_OFF();
-			POWER2_24V_OFF();
-			POWER3_24V_OFF();
-			POWER4_24V_OFF();
-		}
-	}
-	if (id == 1)
-	{
-		if (memcmp(state, "on", 2) == 0)
-		{
-			POWER1_24V_ON();
-		}
-		if (memcmp(state, "off", 3) == 0)
-		{
-			POWER1_24V_OFF();
-		}
-	}
-	if (id == 2)
-	{
-		if (memcmp(state, "on", 2) == 0)
-		{
-			POWER2_24V_ON();
-		}
-		if (memcmp(state, "off", 3) == 0)
-		{
-			POWER2_24V_OFF();
-		}
-	}
-	if (id == 3)
-	{
-		if (memcmp(state, "on", 2) == 0)
-		{
-			POWER3_24V_ON();
-		}
-		if (memcmp(state, "off", 3) == 0)
-		{
-			POWER3_24V_OFF();
-		}
-	}
-	if (id == 4)
-	{
-		if (memcmp(state, "on", 2) == 0)
-		{
-			POWER4_24V_ON();
-		}
-		if (memcmp(state, "off", 3) == 0)
-		{
-			POWER4_24V_OFF();
-		}
-	}
+    if (id == 0)
+    {
+        if (strcmp(status, "on") == 0)
+        {
+            POWER1_24V_ON();
+            POWER2_24V_ON();
+            POWER3_24V_ON();
+            POWER4_24V_ON();
+        }
+        else if (strcmp(status, "off") == 0)
+        {
+            POWER1_24V_OFF();
+            POWER2_24V_OFF();
+            POWER3_24V_OFF();
+            POWER4_24V_OFF();
+        }
+    }
+    else if (id == 1)
+    {
+        if (strcmp(status, "on") == 0)
+        {
+            POWER1_24V_ON();
+        }
+        else if (strcmp(status, "off") == 0)
+        {
+            POWER1_24V_OFF();
+        }
+    }
+    else if (id == 2)
+    {
+        if (strcmp(status, "on") == 0)
+        {
+            POWER2_24V_ON();
+        }
+        else if (strcmp(status, "off") == 0)
+        {
+            POWER2_24V_OFF();
+        }
+    }
+    else if (id == 3)
+    {
+        if (strcmp(status, "on") == 0)
+        {
+            POWER3_24V_ON();
+        }
+        else if (strcmp(status, "off") == 0)
+        {
+            POWER3_24V_OFF();
+        }
+    }
+    else if (id == 4)
+    {
+        if (strcmp(status, "on") == 0)
+        {
+            POWER4_24V_ON();
+        }
+        else if (strcmp(status, "off") == 0)
+        {
+            POWER4_24V_OFF();
+        }
+    }
 }
 
-/*******************************************************************************
- * @funtion      : Power_State
- * @description  : 可控电源状态
- * @param         {int channel} 通道 可选值：5、24
- * @param         {int id} ID编号 可选值：0、1、2、3、4
- * @param         {char *state} 状态 可选值：on、off
- * @return        {*}
- *******************************************************************************/
-void Power_State(int channel, int id, char *state)
+void Power_Status(int channel, int id, char *status)
 {
 	if (channel == 24)
 	{
-		Power_24v_State(id, state);
+		Power_24v_Status(id, status);
 	}
 	if (channel == 5)
 	{
-		Power_5v_State(id, state);
+		Power_5v_Status(id, status);
 	}
 }
 
-/*******************************************************************************
- * @funtion      : Power_Usb_Callback
- * @description  : 串口任务回调函数
- * @param         {char *type} 通讯协议类型
- * @param         {int channel} 通道 可选值：5、24
- * @param         {int id} ID编号 可选值：0、1、2、3、4
- * @param         {char *state} 状态 可选值：on、off
- * @return        {*}
- *******************************************************************************/
-void Power_Usb_Callback(char *type, int channel, int id, char *state)
+void Power_Serial_Callback(cJSON *serial_data)
 {
-	if (memcmp(type, "power-state", 11) == 0)
-	{
-		Power_State(channel, id, state);
-	}
+    cJSON *type = cJSON_GetObjectItem(serial_data, "type");
+    if (type && cJSON_IsString(type))
+    {
+        if(strcmp(type->valuestring, "power-status") == 0)
+        {
+            cJSON *channel = cJSON_GetObjectItem(serial_data, "channel");
+            cJSON *id = cJSON_GetObjectItem(serial_data, "id");
+            cJSON *status = cJSON_GetObjectItem(serial_data, "status");
+            if (channel && cJSON_IsNumber(channel))
+            {
+                Power_Status((int)channel->valueint, (int)id->valueint, status->valuestring);
+            }
+        }
+    }
 }

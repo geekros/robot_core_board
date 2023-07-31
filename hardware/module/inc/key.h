@@ -5,8 +5,8 @@
  ******************************************************************************
  */
 
-#ifndef MODULAR_KEY
-#define MODULAR_KEY
+#ifndef MODULE_KEY
+#define MODULE_KEY
 
 #include <stm32f4xx.h>
 #include <stdio.h>
@@ -15,11 +15,12 @@
 #include <math.h>
 
 #include "usb.h"
+#include "utils.h"
 
-#define Key_State GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_2)
+#define Key_Status GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_2)
 
 void Key_Init(void);
 
-void Key_Usb_Callback(char *type);
+void Key_Serial_Callback(cJSON *serial_data);
 
 #endif

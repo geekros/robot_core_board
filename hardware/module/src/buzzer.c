@@ -7,12 +7,6 @@
 
 #include "buzzer.h"
 
-/*******************************************************************************
- * @funtion      : Buzzer_Init
- * @description  : 模块初始化
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Buzzer_Init(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -52,12 +46,6 @@ void Buzzer_Init(void)
 	Buzzer_Start_Music();
 }
 
-/*******************************************************************************
- * @funtion      : Buzzer_Start_Music
- * @description  : 启动音乐
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Buzzer_Start_Music(void)
 {
 	TIM12->PSC = MI_MIDDLE;
@@ -85,12 +73,6 @@ void Buzzer_Start_Music(void)
 	delay_ms(100);
 }
 
-/*******************************************************************************
- * @funtion      : Buzzer_Low_Voltage_Music
- * @description  : 低电量报警
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Buzzer_Low_Voltage_Music(void){
 	TIM12->PSC = SO_LOW;
 	TIM_SetCompare1(TIM12, 3);
@@ -111,12 +93,6 @@ void Buzzer_Low_Voltage_Music(void){
 	delay_ms(50);
 }
 
-/*******************************************************************************
- * @funtion      : Buzzer_Stop
- * @description  : 停止发声
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Buzzer_Stop(void)
 {
 	TIM_SetCompare1(TIM12, 300);

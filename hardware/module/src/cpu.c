@@ -7,12 +7,6 @@
 
 #include "cpu.h"
 
-/*******************************************************************************
- * @funtion      : Cpu_Init
- * @description  : 模块初始化
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Cpu_Init(void)
 {
 	ADC_CommonInitTypeDef ADC_CommonInitStructure;
@@ -37,12 +31,6 @@ void Cpu_Init(void)
 	ADC_SoftwareStartConv(ADC1);
 }
 
-/*******************************************************************************
- * @funtion      : Cpu_Temperature
- * @description  : 当前CPU温度
- * @param         {*}
- * @return        {float Temperature} 当前CPU温度值
- *******************************************************************************/
 float Cpu_Temperature(void)
 {
 	int tem_read;
@@ -70,17 +58,15 @@ float Cpu_Temperature(void)
 	return Temperature;
 }
 
-/*******************************************************************************
- * @funtion      : Cpu_Usb_Callback
- * @description  : 串口任务回调函数
- * @param         {char *type} 通讯协议类型
- * @return        {*}
- *******************************************************************************/
-void Cpu_Usb_Callback(char *type)
+void Cpu_Serial_Callback(cJSON *serial_data)
 {
-	if (memcmp(type, "cpu-temperature", 15) == 0)
-	{
-		float temperature = Cpu_Temperature();
-		Usb_Write_Data("{\"type\":\"cpu-temperature\",\"temperature\":%0.2f}\r\n", temperature);
-	}
+    cJSON *type = cJSON_GetObjectItem(serial_data, "type");
+    if (type && cJSON_IsString(type))
+    {
+        if(strcmp(type->valuestring, "cpu-temperature") == 0)
+        {
+            float temperature = Cpu_Temperature();
+            Usb_Write_Data("{\"type\":\"cpu-temperature\",\"temperature\":%0.2f}\r\n", temperature);
+        }
+    }
 }

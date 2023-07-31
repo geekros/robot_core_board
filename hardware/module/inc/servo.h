@@ -5,8 +5,8 @@
   ******************************************************************************
 */
 
-#ifndef MODULAR_SERVO
-#define MODULAR_SERVO
+#ifndef MODULE_SERVO
+#define MODULE_SERVO
 
 #include "stm32f4xx.h"
 #include <stdbool.h>

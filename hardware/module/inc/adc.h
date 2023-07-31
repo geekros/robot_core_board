@@ -5,8 +5,8 @@
  ******************************************************************************
  */
 
-#ifndef MODULAR_ADC
-#define MODULAR_ADC
+#ifndef MODULE_ADC
+#define MODULE_ADC
 
 #include <stm32f4xx.h>
 #include <stdio.h>
@@ -30,6 +30,6 @@ float Adc_Board_Voltage(void);
 
 void Adc_Low_Voltage(float voltage);
 
-void Adc_Serial_Callback(char *type, float voltage);
+void Adc_Serial_Callback(cJSON *serial_data);
 
 #endif

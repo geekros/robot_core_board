@@ -5,8 +5,8 @@
  ******************************************************************************
  */
 
-#ifndef MODULAR_USB
-#define MODULAR_USB
+#ifndef MODULE_USB
+#define MODULE_USB
 
 #include <stm32f4xx.h>
 #include <string.h>

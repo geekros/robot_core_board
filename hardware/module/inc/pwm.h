@@ -5,14 +5,17 @@
  ******************************************************************************
  */
 
-#ifndef MODULAR_PWM
-#define MODULAR_PWM
+#ifndef MODULE_PWM
+#define MODULE_PWM
 
 #include <stm32f4xx.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
+#include "usb.h"
+#include "utils.h"
 
 #define PWM_PD12_READ GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_12)
 #define PWM_PD13_READ GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_13)
@@ -166,6 +169,6 @@ void TIM5_Config(void);
 
 void Pwm_Control(int channel, uint16_t pwm);
 
-void Pwm_Usb_Callback(char *type, int channel, int width);
+void Pwm_Serial_Callback(cJSON *serial_data);
 
 #endif

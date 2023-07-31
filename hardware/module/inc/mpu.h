@@ -5,8 +5,8 @@
  ******************************************************************************
  */
 
-#ifndef MODULAR_MPU
-#define MODULAR_MPU
+#ifndef MODULE_MPU
+#define MODULE_MPU
 
 #include <stm32f4xx.h>
 #include <stdio.h>
@@ -14,8 +14,8 @@
 #include <string.h>
 #include <math.h>
 
-#include "utils.h"
 #include "usb.h"
+#include "utils.h"
 
 #define MPU_ENABLE GPIO_ResetBits(GPIOF, GPIO_Pin_6)
 #define MPU_DISABLE GPIO_SetBits(GPIOF, GPIO_Pin_6)
@@ -144,6 +144,8 @@ typedef struct
 
 extern Mpu_Read_Struct Mpu_Read_Data;
 
+Mpu_Read_Struct *Return_Mpu_Address(void);
+
 void Mpu_Init(void);
 
 void Mpu9250_Init(void);
@@ -180,8 +182,6 @@ void Mpu_Attitude_Calc(void);
 
 void Mpu_Task(void);
 
-void Mpu_Usb_Callback(char *type);
-
-Mpu_Read_Struct *Return_Mpu_Address(void);
+void Mpu_Serial_Callback(cJSON *serial_data);
 
 #endif

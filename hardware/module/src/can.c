@@ -9,24 +9,12 @@
 
 Can_Struct Can_Data;
 
-/*******************************************************************************
- * @funtion      : Can_Init
- * @description  : 模块初始化，依次初始化Can1_Init、Can2_Init
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Can_Init(void)
 {
     Can1_Init();
     Can2_Init();
 }
 
-/*******************************************************************************
- * @funtion      : Can1_Init
- * @description  : CAN1初始化，开发板共10组CAN1接口
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Can1_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
@@ -84,12 +72,6 @@ void Can1_Init(void)
     CAN_ITConfig(CAN1, CAN_IT_TME, ENABLE);
 }
 
-/*******************************************************************************
- * @funtion      : Can2_Init
- * @description  : CAN2初始化，开发板共6组CAN2接口
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Can2_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
@@ -148,12 +130,6 @@ void Can2_Init(void)
     CAN_ITConfig(CAN2, CAN_IT_TME, ENABLE);
 }
 
-/*******************************************************************************
- * @funtion      : CAN1_RX0_IRQHandler
- * @description  : CAN1中断回调函数
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void CAN1_RX0_IRQHandler(void)
 {
     if (CAN_GetITStatus(CAN1, CAN_IT_FMP0) != RESET)
@@ -174,12 +150,6 @@ void CAN1_RX0_IRQHandler(void)
     }
 }
 
-/*******************************************************************************
- * @funtion      : CAN2_RX0_IRQHandler
- * @description  : CAN2中断回调函数
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void CAN2_RX0_IRQHandler(void)
 {
     if (CAN_GetITStatus(CAN2, CAN_IT_FMP0) != RESET)
@@ -200,63 +170,17 @@ void CAN2_RX0_IRQHandler(void)
     }
 }
 
-/*******************************************************************************
- * @funtion      : CAN_Receive_Callback
- * @description  : CAN中断数据统一回调函数
- * @param         {CanRxMsg can_read_data} 中断数据
- * @param         {int channel} 通道 可选值1、2
- * @param         {int motor_id} 电机ID
- * @return        {*}
- *******************************************************************************/
 void CAN_Receive_Callback(CanRxMsg can_read_data, int channel, int motor_id)
 {
     
 }
 
-/*******************************************************************************
- * @funtion      : Can_Task
- * @description  : 任务回调函数
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Can_Task(void)
 {
     
 }
 
-/*******************************************************************************
- * @funtion      : Can_Motor_Stop
- * @description  : 停止电机
- * @param         {int channel} 通道 可选值1、2
- * @param         {int motor_id} 电机ID
- * @return        {*}
- *******************************************************************************/
-void Can_Motor_Stop(int channel, int motor_id)
-{
-    
-}
-
-/*******************************************************************************
- * @funtion      : Can_Motor_Run
- * @description  : 控制电机运动
- * @param         {int channel} 通道 可选值1、2
- * @param         {int motor_id} 电机ID
- * @return        {*}
- *******************************************************************************/
-void Can_Motor_Run(int channel, int motor_id)
-{
-    
-}
-
-/*******************************************************************************
- * @funtion      : Can_Usb_Callback
- * @description  : 串口任务回调函数
- * @param         {char *type} 通讯协议类型
- * @param         {int channel} 通道 可选值1、2
- * @param         {int motor_id} 电机ID
- * @return        {*}
- *******************************************************************************/
-void Can_Usb_Callback(char *type, int channel, int motor_id)
+void Can_Serial_Callback(cJSON *serial_data)
 {
     
 }

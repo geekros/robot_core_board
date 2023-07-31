@@ -5,8 +5,8 @@
  ******************************************************************************
  */
 
-#ifndef MODULAR_CAN
-#define MODULAR_CAN
+#ifndef MODULE_CAN
+#define MODULE_CAN
 
 #include <stm32f4xx.h>
 #include <stdio.h>
@@ -15,6 +15,7 @@
 #include <math.h>
 
 #include "usb.h"
+#include "utils.h"
 
 #define CAN_CHANNEL_LEN 2
 #define CAN_MOTOR_LEN 12
@@ -37,14 +38,6 @@ void CAN_Receive_Callback(CanRxMsg can_read_data, int channel, int motor_id);
 
 void Can_Task(void);
 
-void Can_Read_Pid(int channel, int motor_id);
-
-void Can_Motor_Close(int channel, int motor_id);
-
-void Can_Motor_Stop(int channel, int motor_id);
-
-void Can_Motor_Run(int channel, int motor_id);
-
-void Can_Usb_Callback(char *type, int channel, int motor_id);
+void Can_Serial_Callback(cJSON *serial_data);
 
 #endif

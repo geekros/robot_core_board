@@ -5,8 +5,8 @@
  ******************************************************************************
  */
 
-#ifndef MODULAR_REMOTE_CONTROL
-#define MODULAR_REMOTE_CONTROL
+#ifndef MODULE_ROCKER
+#define MODULE_ROCKER
 
 #include <stm32f4xx.h>
 #include <stdio.h>
@@ -16,17 +16,17 @@
 #include <math.h>
 
 #include "usb.h"
+#include "utils.h"
 
 #define ROCKER_BUFFER 128
 
 typedef struct
 {
-	float c0;
-	float c1;
-	float c2;
-	float c3;
-	int s1;
-	int s2;
+	float left_x;
+	float left_y;
+	float right_x;
+	float right_y;
+	int key;
 	volatile unsigned char buffer[ROCKER_BUFFER];
 } Rocker_Struct;
 
@@ -36,6 +36,6 @@ Rocker_Struct *Return_Rocker_Address(void);
 
 void Rocker_Init(int baud_rate);
 
-void Rocker_Usb_Callback(char *type, int s1, int s2, float c0, float c1, float c2, float c3);
+void Rocker_Serial_Callback(cJSON *serial_data);
 
 #endif

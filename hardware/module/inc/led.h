@@ -5,14 +5,17 @@
  ******************************************************************************
  */
 
-#ifndef MODULAR_LED
-#define MODULAR_LED
+#ifndef MODULE_LED
+#define MODULE_LED
 
 #include <stm32f4xx.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
+#include "usb.h"
+#include "utils.h"
 
 #define RED_LED_ON() GPIO_ResetBits(GPIOE, GPIO_Pin_11)
 #define RED_LED_OFF() GPIO_SetBits(GPIOE, GPIO_Pin_11)
@@ -28,10 +31,10 @@
 
 void Led_Init(void);
 
-void Led_All_State(char *state);
+void Led_All_Status(char *status);
 
-void Led_State(char *channel, char *state);
+void Led_Status(char *channel, char *status);
 
-void Led_Usb_Callback(char *type, char *channel, char *state);
+void Led_Serial_Callback(cJSON *serial_data);
 
 #endif

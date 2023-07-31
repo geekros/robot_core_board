@@ -1,5 +1,5 @@
-#ifndef MODULAR_FLASH
-#define MODULAR_FLASH
+#ifndef MODULE_FLASH
+#define MODULE_FLASH
 
 #include <stm32f4xx.h>
 #include <stdio.h>
@@ -12,9 +12,9 @@
 #define  FLASH_ERROR -1
 #define  FLASH_SUCCESS 0
 
-#define FLASH_SAVE_ADDR  ADDR_FLASH_SECTOR_11    //ÉÈÇøÓĞ128kbµÄ´óĞ¡ Ò»°ã´æ´¢Êı¾İ×ã¹»ÁË
+#define FLASH_SAVE_ADDR  ADDR_FLASH_SECTOR_11    //æ‰‡åŒºæœ‰128kbçš„å¤§å° ä¸€èˆ¬å­˜å‚¨æ•°æ®è¶³å¤Ÿäº†
 
-// Ğ¾Æ¬FlashÉÈÇø
+// èŠ¯ç‰‡Flashæ‰‡åŒº
 #define ADDR_FLASH_SECTOR_0     ((uint32_t)0x08000000) /* Base address of Sector 0, 16 Kbytes   */
 #define ADDR_FLASH_SECTOR_1     ((uint32_t)0x08004000) /* Base address of Sector 1, 16 Kbytes   */
 #define ADDR_FLASH_SECTOR_2     ((uint32_t)0x08008000) /* Base address of Sector 2, 16 Kbytes   */
@@ -49,6 +49,6 @@ void Flash_Read(uint32_t len, uint16_t *data);
 
 int Flash_Erase_Data(void);
 
-void Flash_Usb_Callback(char *type, uint32_t len);
+void Flash_Serial_Callback(cJSON *serial_data);
 
 #endif
