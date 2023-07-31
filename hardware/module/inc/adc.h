@@ -30,6 +30,6 @@ float Adc_Board_Voltage(void);
 
 void Adc_Low_Voltage(float voltage);
 
-void Adc_Usb_Callback(char *type, float voltage);
+void Adc_Serial_Callback(char *type, float voltage);
 
 #endif

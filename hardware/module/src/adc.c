@@ -13,12 +13,6 @@ float Low_Voltage = 11.4f;
 int Low_Voltage_Time = 1100;
 int Low_Voltage_Number = 0;
 
-/*******************************************************************************
- * @funtion      : Adc_Init
- * @description  : 模块初始化
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Adc_Init(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -54,12 +48,6 @@ void Adc_Init(void)
 	ADC_SoftwareStartConv(ADC3);
 }
 
-/*******************************************************************************
- * @funtion      : Adc_Task
- * @description  : 电压检测任务
- * @param         {*}
- * @return        {*}
- *******************************************************************************/
 void Adc_Task(void)
 {
 	// 低电压报警，红色LED亮起
@@ -79,12 +67,6 @@ void Adc_Task(void)
 	}
 }
 
-/*******************************************************************************
- * @funtion      : Adc_Pwm_Voltage
- * @description  : 当前PWM电压
- * @param         {*}
- * @return        {float Power} PWM电压值
- *******************************************************************************/
 float Adc_Pwm_Voltage(void)
 {
 	int power_read;
@@ -104,12 +86,6 @@ float Adc_Pwm_Voltage(void)
 	return Power;
 }
 
-/*******************************************************************************
- * @funtion      : Adc_Board_Voltage
- * @description  : 当前开发板电压
- * @param         {*}
- * @return        {float Power} 开发板电压值
- *******************************************************************************/
 float Adc_Board_Voltage(void)
 {
 	int i;
@@ -129,25 +105,12 @@ float Adc_Board_Voltage(void)
 	return Power;
 }
 
-/*******************************************************************************
- * @funtion      : Adc_Board_Voltage
- * @description  : 设置低电压报警阈值
- * @param         {float voltage} 低电压报警阀值
- * @return        {*}
- *******************************************************************************/
 void Adc_Low_Voltage(float voltage)
 {
 	Low_Voltage = voltage;
 }
 
-/*******************************************************************************
- * @funtion      : Adc_Usb_Callback
- * @description  : 串口任务回调函数
- * @param         {char *type} 通讯协议类型
- * @param         {float voltage} 低电压报警阀值
- * @return        {*}
- *******************************************************************************/
-void Adc_Usb_Callback(char *type, float voltage)
+void Adc_Serial_Callback(char *type, float voltage)
 {
 	if (memcmp(type, "adc-low-voltage", 15) == 0)
 	{
