@@ -97,7 +97,7 @@ void Main_Task(void *pvParameters)
 
     xTaskCreate((TaskFunction_t)User_Task, (const char *)"User_Task", (uint16_t)USER_TASK_SIZE, (void *)NULL, (UBaseType_t)USER_TASK_PRIO, (TaskHandle_t *)&User_Task_Handler);
 
-    vTaskDelete(Start_Task_Handler);
+    vTaskDelete(Main_Task_Handler);
 
     taskEXIT_CRITICAL();
 }
