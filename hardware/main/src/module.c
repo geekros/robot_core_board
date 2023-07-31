@@ -18,7 +18,7 @@ void Module_Handle(char *serial_task_buffer)
         Serial_Read_Data.type = cJSON_GetObjectItem(serial_data, "type")->valuestring;
         if (Serial_Read_Data.type == "version")
         {
-            Get_Version();
+            Usb_Write_Data("{\"type\":\"version\",\"version\":%s}\r\n", "1.0.0");
         }
         if (Serial_Read_Data.type == "board-voltage" || Serial_Read_Data.type == "pwm-voltage" || Serial_Read_Data.type == "low-voltage")
         {
