@@ -22,7 +22,7 @@
 #include "pwm.h"
 #include "rocker.h"
 #include "usb.h"
-#include "wiki.h"
+#include "wifi.h"
 
 typedef struct
 {
