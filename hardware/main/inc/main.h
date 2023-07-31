@@ -14,6 +14,7 @@
 
 #define MAIN_TASK_PRIO 1
 #define MAIN_TASK_SIZE 512
+static TaskHandle_t Main_Task_Handler;
 
 #define SYSTEM_TASK_PRIO 2
 #define SYSTEM_TASK_SIZE 512
