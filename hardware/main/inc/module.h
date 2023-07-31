@@ -23,6 +23,7 @@
 #include "rocker.h"
 #include "usb.h"
 #include "wifi.h"
+#include "utils.h"
 
 typedef struct
 {

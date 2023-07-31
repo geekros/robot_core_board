@@ -9,14 +9,14 @@
 
 Serial_Data_Struct Serial_Read_Data;
 
-void Module_Handle(char *serial_task_buffer)
+void Module_Handle(char *json)
 {
     cJSON *serial_data;
-    serial_data = cJSON_Parse(serial_task_buffer);
+    serial_data = cJSON_Parse(json);
     if (serial_data)
     {
         Serial_Read_Data.type = cJSON_GetObjectItem(serial_data, "type")->valuestring;
-        if (Serial_Read_Data.type == "version")
+        if(strcmp(Serial_Read_Data.type, "version") == 0)
         {
             Usb_Write_Data("{\"type\":\"version\",\"version\":%s}\r\n", "1.0.0");
         }
