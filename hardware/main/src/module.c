@@ -71,5 +71,5 @@ void Module_Handle(char *serial_task_buffer)
 
 void Get_Version(void)
 {
-    Usb_Write_Data("{\"type\":\"version\",\"state\":%s}\r\n", "1.0.0");
+    Usb_Write_Data("{\"type\":\"version\",\"version\":%s}\r\n", "1.0.0");
 }
