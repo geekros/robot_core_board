@@ -69,7 +69,7 @@ void Serial_Task(void)
             }
         }
 
-        delay_ms(5);
+        delay_ms(10);
     }
 }
 
