@@ -19,10 +19,15 @@
 #include <usbd_desc.h>
 #include <usbd_cdc_vcp.h>
 
+#include "usb.h"
+#include "utils.h"
+
 void Usb_Init(void);
 
 void Usb_Read_Data(uint8_t *pbuf, uint32_t buf_len);
+
 void Usb_Send_Data(uint8_t *pbuf, uint32_t buf_len);
+
 void Usb_Write_Data(char *fmt, ...);
 
 uint8_t Usb_Read_State(void);

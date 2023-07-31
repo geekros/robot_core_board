@@ -28,6 +28,10 @@ void Module_Handle(char *serial_task_buffer)
         {
             Cpu_Serial_Callback(serial_data);
         }
+        if (Serial_Read_Data.type == "hmi-init")
+        {
+            Hmi_Serial_Callback(serial_data);
+        }
         if (Serial_Read_Data.type == "io-mode" || Serial_Read_Data.type == "io-status")
         {
             Io_Serial_Callback(serial_data);
@@ -55,6 +59,10 @@ void Module_Handle(char *serial_task_buffer)
         if (Serial_Read_Data.type == "rocker")
         {
             Rocker_Serial_Callback(serial_data);
+        }
+        if (Serial_Read_Data.type == "wifi-init")
+        {
+            Wifi_Serial_Callback(serial_data);
         }
     }
 

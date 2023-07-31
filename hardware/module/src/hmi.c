@@ -59,21 +59,17 @@ void UART8_IRQHandler(void)
         data = USART_ReceiveData(UART8);
         if (data == '{')
         {
-            // 检测到JSON数据起始符后开始记录数据
             Hmi_Data.buffer[0] = data;
             Hmi_Data.len = 1;
         }
         else if (data == '}')
         {
-            // 检测到JSON数据结束符后停止数据记录
             Hmi_Data.buffer[Hmi_Data.len] = data;
-            // 将完整的JSON数据传入JSON解析函数
-            Hmi_Parse_Json((char *)Hmi_Data.buffer);
+            Module_Handle((char*) Hmi_Data.buffer);
             Hmi_Data.len = 0;
         }
         else
         {
-            // 判断是否检测到JSON数据起始符并记录数据
             if (Hmi_Data.len > 0)
             {
                 Hmi_Data.buffer[Hmi_Data.len] = data;
@@ -83,7 +79,18 @@ void UART8_IRQHandler(void)
     }
 }
 
-void Flash_Serial_Callback(cJSON *serial_data)
+void Hmi_Serial_Callback(cJSON *serial_data)
 {
-
+    cJSON *type = cJSON_GetObjectItem(serial_data, "type");
+    if (type && cJSON_IsString(type))
+    {
+        if(strcmp(type->valuestring, "hmi-init") == 0)
+        {
+            cJSON *baud_rate = cJSON_GetObjectItem(serial_data, "baud_rate");
+            if (baud_rate && cJSON_IsNumber(baud_rate))
+            {
+                Hmi_Init((int)baud_rate->valueint);
+            }
+        }
+    }
 }

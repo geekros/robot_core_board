@@ -15,6 +15,8 @@
 #include <math.h>
 
 #include "usb.h"
+#include "utils.h"
+#include "module.h"
 
 #define HMI_DATA_LEN 128
 

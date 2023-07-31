@@ -8,14 +8,16 @@
 #ifndef MODULE_WIFI
 #define MODULE_WIFI
 
-#include "stm32f4xx.h"
-#include <stdbool.h>
+
+#include <stm32f4xx.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 
-#include "serial_task.h"
+#include "usb.h"
+#include "utils.h"
+#include "module.h"
 
 #define WIFI_DATA_LEN 128
 
@@ -28,8 +30,6 @@ extern Wifi_Struct Wifi_Data;
 
 void Wifi_Init(int baud_rate);
 
-void Wifi_Parse_Json(char *json);
-
-void Wifi_Usb_Callback(char *type, int baud_rate);
+void Wifi_Serial_Callback(cJSON *serial_data);
 
 #endif
