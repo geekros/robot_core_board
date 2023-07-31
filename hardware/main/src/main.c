@@ -93,11 +93,9 @@ void Task_Manage(void)
 #define SYSTEM_TASK_PRIO 2
 #define SYSTEM_TASK_SIZE 256
 static TaskHandle_t System_Task_Handler;
-
 #define SERIAL_TASK_PRIO 3
 #define SERIAL_TASK_SIZE 1024
 static TaskHandle_t Serial_Task_Handler;
-
 #define USER_TASK_PRIO 4
 #define USER_TASK_SIZE 1024
 static TaskHandle_t User_Task_Handler;
