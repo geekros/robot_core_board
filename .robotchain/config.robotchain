@@ -1,9 +1,10 @@
 {
     "type": "board",
     "title": "robot_core_board",
+    "describe": "机器人主控开发板开源程序包",
     "document": {
         "git": "https://github.com/geekros/robot_core_board",
-        "wiki": ""
+        "wiki": "https://www.geekros.com/documentation"
     },
     "version": "1.0.0",
     "Kernel": "cortex-m4",
