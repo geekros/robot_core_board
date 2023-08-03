@@ -23,4 +23,3 @@ def robot_exit(sdk):
 
 if __name__ == '__main__':
     framework_sdk = framework.Init()
-    robot_start(framework_sdk)
