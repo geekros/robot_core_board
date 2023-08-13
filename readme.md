@@ -24,6 +24,20 @@ sudo curl -s https://cdn.geekros.com/robotchain/install.sh|bash
 sudo apt install -y robot-core-board
 ```
 
+## 📖 Development Board Information
+
+> 开发板接口标识图
+>
+> Development Board Interface Identification Diagram
+
+![](doc/screenshot_1000.png)
+
+> 开发板尺寸图
+>
+> Development board dimension diagram
+
+![](doc/screenshot_2000.png)
+
 ## 🌞 Development Team
 
 > GEEKROS
