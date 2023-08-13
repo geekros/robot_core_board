@@ -31,6 +31,7 @@ echo -e "\033[32mStarting to build the deb software package for you...\033[0m"
 
 sudo cp -r .robotchain debian/opt/robotchain/manager/board/"$title"/
 sudo cp -r block debian/opt/robotchain/manager/board/"$title"/
+sudo cp -r doc debian/opt/robotchain/manager/board/"$title"/
 sudo cp -r hardware debian/opt/robotchain/manager/board/"$title"/
 sudo cp -r software debian/opt/robotchain/manager/board/"$title"/
 sudo cp .gitignore debian/opt/robotchain/manager/board/"$title"/
@@ -54,7 +55,6 @@ export architecture_str
 sudo -E sh -c 'echo $architecture_str >> debian/DEBIAN/control'
 sudo sh -c 'echo "Installed-Size: 5000" >> debian/DEBIAN/control'
 sudo sh -c 'echo "Section: utils" >> debian/DEBIAN/control'
-sudo sh -c 'echo "Depends: git" >> debian/DEBIAN/control'
 sudo sh -c 'echo "Description: robotchain and robot" >> debian/DEBIAN/control'
 
 sudo dpkg --build debian/ && dpkg-name debian.deb
