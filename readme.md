@@ -28,6 +28,22 @@ sudo apt install -y robot-core-board
 
 > 开发板接口标识图
 >
+> feature parameters
+
+| 参数             | 说明                |
+|----------------|-------------------|
+| 芯片             | STM32F427IIH6     |
+| 芯片处理器          | ARM® Cortex®-M4   |
+| 芯片FLASH        | 2MB               |
+| 芯片RAM          | 256KB             |
+| 最大电压           | 26V               |
+| 支持电池           | 3～6S LiPo         |
+| 允许最大输入电流\*（持续） | 20A               |
+| 尺寸             | 95mm \* 70mm      |
+| 工作温度范围         | \-40°C ~ 85°C（TA） |
+
+> 开发板接口标识图
+>
 > Development Board Interface Identification Diagram
 
 ![](doc/screenshot_1000.png)
