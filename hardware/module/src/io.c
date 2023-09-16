@@ -678,7 +678,7 @@ void Io_Serial_Callback(cJSON *serial_data)
             if (channel && cJSON_IsNumber(channel))
             {
                 int ioChannel = (int)channel->valueint;
-                Io_State(channel, status->valuestring);
+                Io_State(ioChannel, status->valuestring);
             }
         }
     }
